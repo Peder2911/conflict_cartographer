@@ -1,0 +1,45 @@
+[GLOBAL]
+pants_version = "2.19.1"
+backend_packages = [
+   "pants.backend.python",
+   "pants.backend.python",
+   "pants.backend.python.lint.black",
+   "pants.backend.python.lint.bandit",
+   "pants.backend.python.lint.flake8",
+   "pants.backend.python.lint.isort",
+   "pants.backend.python.typecheck.mypy",
+   "pants.backend.docker",
+   "pants.backend.experimental.javascript",
+]
+
+[python]
+enable_resolves = true
+default_resolve = "python-default"
+interpreter_constraints = [
+   "CPython~=3.11.0"
+]
+
+[python-infer]
+use_rust_parser = true
+
+[python.resolves]
+python-default = "3rdparty/python/default.lock"
+
+[pytest]
+install_from_resolve="python-default"
+
+[black]
+install_from_resolve="python-default"
+
+[isort]
+install_from_resolve="python-default"
+
+[mypy]
+install_from_resolve="python-default"
+args =[
+   "--explicit-package-bases"
+]
+
+[anonymous-telemetry]
+enabled = true
+repo_id = "582EB964-DD85-4BCF-BD94-14E54495A370"

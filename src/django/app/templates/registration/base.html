@@ -1,0 +1,37 @@
+{% load render_bundle from webpack_loader %}
+{% load static %}
+
+<!DOCTYPE html>
+<html id="regbase" style="display:none">
+   <head>
+      <title>{% block title %}{% endblock %}</title>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width" />
+
+      <!-- Style and font -->
+      <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+      <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
+      {% block header %}{% endblock %}
+   </head>
+   <body>
+      <div id="page" style="position: relative">
+         <div id="consentmodal"></div>
+         <div class="container">
+            <h1><a href="/">Conflict Cartographer</a><span></span></h1>
+            <div id="regCard">
+               <h1>{% block pagetype %}{% endblock%}</h1>
+               {% block content %}
+               {% endblock %}
+            </div>
+            <a href="https://www.prio.org">
+                  <img id="priologo" src="{% static "img/priologo.png" %}" height=100 alt="">
+            </a>
+         </div>
+      </div>
+      <script src="{% static "js/accounts.js" %}"></script>
+      <script>
+         {% block js %}
+         {% endblock %}
+      </script>
+   </body>
+</html>

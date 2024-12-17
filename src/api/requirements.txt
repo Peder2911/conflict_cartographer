@@ -1,0 +1,15 @@
+fastapi~=0.70.0
+uvloop~=0.16.0
+httptools~=0.3.0
+SQLAlchemy~=1.4.26
+psycopg2~=2.9.1
+geojson-pydantic~=0.3.1
+toolz~=0.11.1
+azure-storage-blob~=12.9.0
+environs~=9.3.4
+PyMonad~=2.4.0
+uvicorn~=0.15.0
+gunicorn~=20.1.0
+azure-blob-storage-cache==0.2.0
+
+cc-backend-lib>=0.15.0

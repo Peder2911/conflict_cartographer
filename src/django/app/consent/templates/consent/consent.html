@@ -1,0 +1,53 @@
+{% extends 'registration/base.html' %}
+{% load static %}
+{% block header %}
+<style>
+#message {
+   max-width: 600px;
+   max-height: 50vh;
+   overflow-y: scroll;
+   background: white;
+   border: 10px solid white;
+   border-top: 40px solid white;
+   border-bottom: 40px solid white;
+   padding: 0 30px;
+   box-shadow: 0 0 0 1pt #aaa;
+   margin: 0 0 20px 0;
+}
+
+#message>h1{
+   padding: 0;
+   margin: 0;
+   font-size: 50px;
+}
+
+#message>h2 {
+   font-size: 20px;
+   border-bottom: 1px solid #bbb;
+   padding: 0 0 5px 0;
+}
+
+button#submit-button {
+   padding: 10px 20px;
+   font-size: 20px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="message">
+   {% include 'consent/message.html' %}
+</div>
+
+<button id="submit-button">I consent</button>
+
+<script>
+   document.querySelector("#submit-button").onclick = function(){
+         window.location = "/consent/submit" + (
+            "{{ request.GET.from }}"?
+            "?from={{ request.GET.from }}":""
+         )
+      }
+</script>
+
+{% endblock %}

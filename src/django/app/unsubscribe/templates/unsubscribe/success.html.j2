@@ -1,0 +1,22 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}
+Success!
+{% endblock %}
+
+{% block pagetype %}
+Success!
+{% endblock %}
+
+{% block content %}
+<p>
+   You have successfully unsubscribed. Sad to see you go!
+</p>
+<p>
+   Redirecting you...
+</p>
+{% endblock %}
+
+{% block js %}
+setTimeout(function(){window.location="/"}, 3000)
+{% endblock %}

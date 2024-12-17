@@ -1,0 +1,3 @@
+
+class NotAllowed(Exception):
+    pass

@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'invitations/filemenu.css' %}">
+{% endblock %}
+{% block content %}
+<div id="cardcontainer">
+   <div class="card">
+      <h2>Upload invitation excel</h2>
+         <p class="description">
+         Upload an excel file with invitations. Existing
+         invitations are overwritten, and invitations for already registered
+         users are not added.
+         </p>
+         <p class="description">
+         The file must contain the columns 
+         <span class="emphasis">
+            affiliation, position and email.
+         </span>
+         Additional columns are interpreted as
+         countries (1/0) to be assigned to the invitee.
+         </p>
+         <form action="/upload/invexcel/" method="post" enctype="multipart/form-data">
+            <input name="datafile" type="file">
+            <input type="submit">
+            {% csrf_token %}
+         </form>
+   </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+uvicorn>=0.13.4
+gunicorn>=20.1.0
+fastapi>=0.63.0
+uvloop>=0.15.2
+httptools>=0.1.1
+azure-storage-blob>=12.8.0
+dateutils>=0.6.12
+utm-zone>=1.0.2
+bs4>=0.0.1
+Shapely>=1.7.1
+pyproj>=3.0.1
+bs4>=0.0.1
+environs==9.3.4

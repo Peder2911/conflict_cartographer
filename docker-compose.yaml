@@ -1,0 +1,157 @@
+services:
+   postgres:
+      image: postgres:14.15
+      environment:
+         POSTGRES_USER: ${DB_USER}
+         POSTGRES_PASSWORD: ${DB_PASSWORD}
+         POSTGRES_DB: conflictcartographer
+      networks:
+         - conflict-cartographer-net
+   azurite:
+      image: mcr.microsoft.com/azure-storage/azurite:latest
+      networks:
+         - conflict-cartographer-net
+   init-containers:
+      image: mcr.microsoft.com/azure-cli:2.67.0 
+      restart: no
+      command: >
+         bash -c '
+         az storage container create --connection-string=$$CONNECTION_STRING --name ged-cache;
+         az storage container create --connection-string=$$CONNECTION_STRING --name general-cache
+         '
+      environment:
+         CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite/devstoreaccount1;
+      networks:
+         - conflict-cartographer-net
+
+   django-migrate:
+      build: src/django
+      command: ./manage.py migrate
+      restart: no
+      environment:
+         DB_HOST:            postgres
+         DB_PORT:            5432
+         DB_PASSWORD:        ${DB_PASSWORD}
+         DB_USER:            ${DB_USER}
+         DB_NAME:            conflictcartographer
+      networks:
+         - conflict-cartographer-net
+   django:
+      depends_on: ["django-migrate"]
+      build: src/django
+      environment:
+         SCHEDULER_URL:      http://scheduler
+         METRICS_URL:        http://metrics
+         GED_URL:            http://ged
+         API_URL:            http://api
+
+         DB_HOST:            postgres
+         DB_PORT:            5432
+         DB_PASSWORD:        ${DB_PASSWORD}
+         DB_USER:            ${DB_USER}
+         DB_NAME:            conflictcartographer
+
+         EMAIL_API_KEY:      ${EMAIL_API_KEY}
+         EMAIL_FROM_ADDRESS: conflictcartographer@prio.org
+         OPEN_MONTHS:        3
+         PRODUCTION:         1
+         SECRET_KEY:         ${DJANGO_SECRET_KEY}
+      ports:
+         - "8000:80"
+      networks:
+         - conflict-cartographer-net
+
+      restart: always
+
+   ged:
+      build: src/ged
+      environment:
+         BLOB_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite/devstoreaccount1;
+         GED_CACHE_CONTAINER_NAME: "ged-cache"
+
+      ports:
+         - "8001:80"
+      networks:
+         - conflict-cartographer-net
+
+      restart: always
+
+   scheduler:
+      build: src/scheduler
+      ports:
+         - "8003:80"
+      networks:
+         - conflict-cartographer-net
+
+      restart: always
+   metrics-migrate:
+      build: src/metrics
+      command: alembic upgrade head
+      depends_on: ["init-containers"]
+      restart: no
+      environment:
+         DB_HOST: postgres
+         DB_PORT: 5432
+         DB_USER: ${DB_USER}
+         DB_PASSWORD: ${DB_PASSWORD}
+         DB_NAME: conflictcartographer
+
+         GED_API_URL: http://ged
+         PREDS_API_URL: http://api
+         SCHEDULER_URL: http://scheduler
+
+         BLOB_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite/devstoreaccount1;
+
+         GENERAL_CACHE_CONTAINER_NAME: "general-cache" 
+      networks:
+         - conflict-cartographer-net
+
+   metrics:
+      build: src/metrics
+      depends_on: ["metrics-migrate"]
+      environment:
+         DB_HOST: postgres
+         DB_PORT: 5432
+         DB_USER: ${DB_USER}
+         DB_PASSWORD: ${DB_PASSWORD}
+         DB_NAME: conflictcartographer
+
+         GED_API_URL: http://ged
+         PREDS_API_URL: http://api
+         SCHEDULER_URL: http://scheduler
+
+         BLOB_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite/devstoreaccount1;
+
+         GENERAL_CACHE_CONTAINER_NAME: "general-cache" 
+
+         ERROR_LOG_FILE: "-"
+
+      ports:
+         - "8004:80"
+      networks:
+         - conflict-cartographer-net
+
+      restart: always
+
+   api:
+      build: src/api
+      depends_on: ["django","metrics"]
+      environment:
+         DB_HOST: postgres
+         DB_PORT: 5432
+         DB_USER: ${DB_USER}
+         DB_PASSWORD: ${DB_PASSWORD}
+         DB_NAME: conflictcartographer
+         BLOB_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite/devstoreaccount1;
+         GENERAL_CACHE_CONTAINER_NAME: "general-cache" 
+
+      ports:
+         - "8002:80"
+
+      networks:
+         - conflict-cartographer-net
+
+      restart: always
+
+networks:
+   conflict-cartographer-net: {}

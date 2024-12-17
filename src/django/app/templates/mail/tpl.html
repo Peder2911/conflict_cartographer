@@ -1,0 +1,63 @@
+<html>
+<body>
+   <!--
+   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital@1&display=swap" rel="stylesheet">
+   -->
+   <style>
+      html {
+         font-family: 'Raleway', sans-serif;
+         color: #404040;
+      }
+
+      table {
+         border: none;
+         max-width: 600px;
+         min-width: 400px;
+         border-collapse: collapse;
+      }
+
+      td {
+         padding: 4px 20px;
+      }
+      tbody {
+         background: #f0f0f0;
+      }
+      hr {
+         border-top: 1px solid #c0c0c0;
+      }
+      #headline {
+         padding-top: 20px;
+      }
+      #participationLink {
+         font-size: 20px;
+         color: black;
+      }
+      #unsubLink{
+         color: #606060;
+         padding-bottom: 20px;
+      }
+      img {
+         margin: 20px;
+      }
+   </style>
+   <table align="center" width="100%"><tbody width=600px>
+      <tr><td id="headline" align="center">
+         <h1>{{ headline }}</h1>
+      </td></tr>
+      <tr><td><hr></td></tr>
+      <tr><td>
+         {{ content |safe }}
+      </td></tr>
+      <tr><td id="participationLink">
+         To participate, <a href="{{ link }}">click here</a>.
+      </td></tr>
+      <tr><td><hr></td></tr>
+      <tr><td id="sig">
+         {{ signature |safe }}
+         <a href="https://www.prio.org" target="_blank">
+         <img src="https://www.prio.org/images/network/prio.png" alt="">
+         </a>
+      </td></tr>
+   </tbody></table>
+</body>
+</html>

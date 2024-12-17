@@ -1,0 +1,23 @@
+{% extends "registration/base.html"%}
+{% block content %}
+<form method="post" accept-charset="utf-8">
+   {% for field in form %}
+   <div class="fieldWrapper">
+      {{ field.label_tag }}
+      {{ field }}
+      {{ field.errors }}
+   </div>
+   {% endfor %}
+   {% if form.non_field_errors %}
+   <div class="fieldWrapper">
+      {{ form.non_field_errors }}
+   </div>
+   {% endif %}
+   <div class="buttons">
+      <input type="submit" value="{% block submitname %}Submit{% endblock %}">
+      {% block buttons %}{% endblock %}
+   </div>
+   {% csrf_token %}
+</form>
+{% endblock %}
+

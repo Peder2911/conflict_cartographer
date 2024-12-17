@@ -1,0 +1,103 @@
+@import "@/sass/variables.sass"
+
+html,body
+   font-family: "Raleway"
+   padding: 0px
+   margin: 0px
+   color: #404040
+
+//button
+   border: 1px solid gray 
+   border-radius: 4px
+
+.container
+   height: 100vh
+   width: 100vw
+   display: grid
+   grid-template-rows: 1fr 8fr 1fr 
+   place-items: center
+
+#priologo
+   margin: 60px
+
+#regCard 
+   padding: 10px 60px 60px 60px
+   display: grid 
+   place-items: center
+   border-radius: $roundedness
+   background: $ui-gray
+
+form
+   width: 280px
+   display: grid 
+   grid-gap: $menu-gaps*2
+   place-items: center
+
+div.fieldWrapper
+   width: 100%
+   display: grid
+   grid-gap: $menu-gaps
+
+label
+   font-size: 20px
+
+ul.errorlist
+   padding: 0 
+   color: white 
+   background: $ui-highlight
+   list-style-type: none
+   width: 280px
+   margin: 0
+   border-radius: $roundedness
+ul.errorlist > li 
+   padding: $menu-gaps 10px
+
+input[type=text],input[type=password],input[type=email]
+   border: none
+   border-top: 2px solid $ui-darkergray
+   border-left: 1px solid $ui-darkgray 
+   border-right: 1px solid $ui-darkgray 
+   height: 35px 
+   width: 99.5% 
+   text-align: center
+   border-radius: $roundedness
+   font-size: 18px
+   margin: 0
+   padding: 0
+
+form > br
+   display: none
+
+input[type=submit],#registerlink
+   margin-top: 20px
+   border: none
+   border-bottom: 2px solid $ui-darkergray
+   height: 50px
+   width: 150px
+   border-radius: $roundedness
+   background: $ui-lightgray
+   text-align: center
+   text-decoration: none
+   color: black
+   font-size: 15px
+   display: grid
+   place-items: center
+   font-family: "Raleway"
+   margin: 0
+   padding: 0
+
+input[type=submit]:hover,#registerlink:hover
+   background: $ui-highlight
+
+div.buttons
+   display: grid
+   margin-top: $menu-gaps/2
+   grid-gap: $menu-gaps
+   grid-template-rows: 1fr
+
+h1>a
+   color: $ui-highlight
+   text-decoration: none
+   
+h1
+   font-weight: normal 

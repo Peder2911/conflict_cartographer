@@ -1,0 +1,78 @@
+@import "../sass/variables.sass"
+
+$buttonsize: 40px
+
+// Tile stuff
+.leaflet-tile-container img
+    filter: brightness(0.8)
+
+.leaflet-tile-container canvas 
+    filter: brightness(0.9) contrast(1.1) //saturate(5.5) 
+
+// Editing dots
+.leaflet-editing-icon
+   //width: 5px !important
+   //height: 5px !important
+   //top: 5px !important 
+   //left: 5px !important
+   border-radius: 10px
+   border: none
+   background: $drawcolor
+
+.leaflet-marker-pane div:nth-child(2)
+   background: $ui_highlight
+
+.leaflet-touch .leaflet-control-zoom-display 
+  width: $tbsize + 8px
+  height: $tbsize + 8px
+  font-size: 18px
+  line-height: $tbsize - ($tbsize / 4) 
+
+.leaflet-touch .leaflet-bar a, .leaflet-touch .leaflet-toolbar-0 > li > a 
+  width: $tbsize + 4px
+  height: $tbsize + 4px
+  font-size: $tbsize / 2 
+  line-height: $tbsize + 5px
+  background-size: 314px 30px
+
+.leaflet-touch .leaflet-draw-toolbar.leaflet-bar a 
+  background-position-y: 6px
+
+.leaflet-touch .leaflet-draw-actions a, .leaflet-touch .leaflet-control-toolbar .leaflet-toolbar-1 > li > .leaflet-toolbar-icon 
+  font-size: $tbsize / 2 
+  line-height: $tbsize + 4px
+  height: $tbsize + 4px
+
+.leaflet-touch .leaflet-draw-actions, .leaflet-touch .leaflet-toolbar-1 
+  left: $tbsize + 5px
+
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar
+   border: none
+
+.leaflet-bar a, .leaflet-bar a:hover, .leaflet-bar a.leaflet-disabled
+  background: $ui-gray 
+  border-bottom: 4px solid $ui-darkgray !important
+  border-radius: $roundedness !important
+  display: grid
+  place-items: center
+  content: "*" !important
+
+.leaflet-touch .leaflet-draw-actions, .leaflet-touch .leaflet-toolbar-1
+  left: $buttonsize !important
+
+
+.leaflet-bar a:hover:not(.leaflet-disabled)
+  background: $ui-highlight 
+
+.leaflet-draw-draw-polygon::after
+  content: "✏️" !important
+  font-size: 30px
+  
+.leaflet-draw-draw-polygon.lookatme
+  animation: nagging 1s infinite !important
+  background: $ui-highlight !important
+
+.leaflet-div-icon
+   border: none
+   border-radius: 15px
+   background: $ui-highlight

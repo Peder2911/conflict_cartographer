@@ -1,0 +1,13 @@
+html {
+   font-family: 'Raleway', sans-serif;
+}
+
+tr>td{
+   align: center;
+   padding: 0px 25px
+}
+
+table#main {
+   min-width: 320px;
+   width: 100%
+}

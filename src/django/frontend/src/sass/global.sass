@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap')
+@import "@/sass/variables.sass"
+
+body
+   font-family: raleway
+   color: #555
+
+button
+   border: none
+   border-radius: 10px
+   border-bottom: 4px solid $ui-darkergray
+   font-size: 20px
+   color: white
+
+button:hover
+   filter: brightness(1.1)
+
+button:active
+   filter: brightness(0.9)
+
+button:focus
+   outline: none
+
+button.continue
+   background: $ui-highlight 
+
+button.alt
+   background: #aaa
+   color: white 
+
+button.fill
+   width: 100%
+   height: 100%
+
+.overlay
+   position: absolute
+   top: 0
+   left: 0
+   pointer-events: none
+   height: 100vh
+   width: 100vw
+
+.holder.footer
+   margin: 6px
+
+.footer-buttons
+   //padding: 10px
+   display: grid
+   height: 100%
+   grid-auto-flow: column
+   grid-gap: 10px
+
+input[type=text]
+   background: #ddd
+   padding: 20px
+   border: none
+   border-radius: 10px
+   outline: none
+   font-size: 20px
+
+.header h1
+   color: #aaa 
+   font-size: 30px
+   line-height: 10px
+
+.header
+   border-bottom: 1px solid #ddd
+   //margin-bottom: 8px
+
+@media only screen and (max-width: $mob-width)
+   .only-wide
+      display: none
+
+.material-design-icon
+   pointer-events: none

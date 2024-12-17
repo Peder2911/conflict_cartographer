@@ -1,0 +1,43 @@
+{% load render_bundle from webpack_loader %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Conflict Cartographer</title>
+
+   <!-- ?? -->
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+   
+   <!-- CSS -->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+   <!-- Favicon -->
+   <link rel="apple-touch-icon" sizes="180x180" href={% static "/apple-touch-icon.png" %}>
+   <link rel="icon" type="image/png" sizes="32x32" href={% static "/favicon-32x32.png" %}>
+   <link rel="icon" type="image/png" sizes="16x16" href={% static "/favicon-16x16.png" %}>
+   <link rel="manifest" href={% static "/site.webmanifest" %}>
+
+</head>
+<body>
+   YEREEEE
+   <noscript>
+      <strong>We're sorry but frontend doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+   </noscript>
+   
+   <div id="app"> 
+      <app>
+      </app>
+   </div>
+
+   {% csrf_token %}
+   {{ data|json_script:"dat"}}
+   {{ sessionInfo|json_script:"sessionInfo"}}
+   <script src="{% static "js/app.js" %}"></script>
+
+</body>
+</html>

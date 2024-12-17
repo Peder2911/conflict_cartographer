@@ -1,0 +1,26 @@
+
+@import "@/sass/variables"
+
+@keyframes nagging
+   0% 
+      background: $ui-gray
+   2% 
+      background: scale-color($ui-highlight, $lightness: 60%, $saturation: -70%)
+   100% 
+      background: $ui-gray
+
+@keyframes fadein
+   0%
+      opacity: 0
+   100%
+      opacity: 1
+
+@keyframes fadepulse
+   0%
+      opacity: 0
+   10%
+      opacity: 1
+   70%
+      opacity: 1
+   100%
+      opacity: 0

@@ -1,0 +1,37 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "parcel src/app.js",
+    "build": "parcel build src/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.2.0",
+    "parcel": "^1.12.4",
+    "sass": "^1.29.0",
+    "typescript": "^4.1.2",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "d3": "^6.3.1",
+    "d3-collection": "^1.0.7",
+    "leaflet": "^1.7.1",
+    "parcel-plugin-compress": "^2.0.2",
+    "rainbowvis.js": "^1.0.1",
+    "sort": "0.0.3",
+    "src": "^1.1.2",
+    "vue": "^2.6.12",
+    "vue-hot-reload-api": "^2.3.4",
+    "vue-router": "^3.5.2",
+    "vue2-leaflet": "^2.6.0"
+  },
+  "alias": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
+  }
+}

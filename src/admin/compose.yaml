@@ -1,0 +1,96 @@
+
+services:
+
+  admin:
+    build: .
+
+    environment:
+      API_URL:                  "http://api"
+      SCHEDULER_URL:            "http://scheduler"
+
+      GUNICORN_ACCESS_LOG_FILE: "-"
+      GUNICORN_ERROR_LOG_FILE:  "-"
+
+      REDIS_CACHE_HOST:         "redis-cache"
+      MAILJET_URL:              "http://my.mock-mailjet.biz"
+
+      STATIC_URL:               "http://0.0.0.0:8081"
+      STATIC_VERSION:           ""
+      
+      LOG_LEVEL:                "DEBUG"
+
+    ports:
+      - "8080:8080"
+
+    networks:
+      - cc-admin-net
+
+  frontend-dev-server:
+    image: node:lts
+
+    volumes:
+      - ./frontend:/frontend
+
+    working_dir: /frontend 
+
+    entrypoint: bash -c "npm install && npm run serve"
+
+    ports:
+      - "8081:1234"
+
+    networks:
+      - cc-admin-net
+
+  redis-cache:
+    image: redis:6
+
+    networks:
+      - cc-admin-net
+
+  my.mock-mailjet.biz:
+    image: mikesplain/nginx-proxy-pass
+    environment:
+      TARGET_SERVER: mock-mailjet:6001
+    networks:
+      - cc-admin-net
+
+  mock-mailjet: 
+    image: peder2911/mailjet-utils:0.2.0
+
+    environment:
+      GUNICORN_BIND: "0.0.0.0:6001"
+
+    networks:
+      - cc-admin-net
+
+  api:
+    image: conflictcartographer.azurecr.io/prio-data/cc_api:dev
+
+    environment:
+      DB_HOST:                        ${DB_HOST}
+      DB_PORT:                        ${DB_PORT}
+      DB_USER:                        ${DB_USER}
+      DB_PASSWORD:                    ${DB_PASSWORD}
+      DB_NAME:                        ${DB_NAME}
+      BLOB_STORAGE_CONNECTION_STRING: ${BLOB_STORAGE_CONNECTION_STRING}
+      GENERAL_CACHE_CONTAINER_NAME:   "general-cache"
+      GUNICORN_ERROR_LOG_FILE:        "-"
+      GUNICORN_ACCESS_LOG_FILE:       "-"
+
+    ports:
+      - "6002:80"
+
+    networks:
+      - cc-admin-net 
+
+  scheduler:
+    image: conflictcartographer.azurecr.io/prio-data/ccsched:1.0.0
+
+    ports:
+      - "6003:80"
+
+    networks:
+      - cc-admin-net 
+
+networks:
+  cc-admin-net:
